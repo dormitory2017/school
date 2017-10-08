@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.shopping-car{
+				width: 300px;
+				height: 500px;
+				background-color: gainsboro;
+				margin: 10px auto;
+				position: relative;
+			}
+			.right{
+				float: right;
+			}
+			
+			.clear:after{
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.list{
+				margin:0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			.list li{
+				padding:  0 10px;
+				height: 3em;
+				line-height: 3em;
+				margin: 4px 0 ;
+				background-color: dimgray;
+			}
+			
+			.list li span{
+				font-size: 1.5em;
+				color: white;
+				padding: 0 0.5em;
+			}
+			
+			.list li span a{
+				text-decoration: none;
+				color: white;
+			}
+			
+			.text{
+				position: absolute;
+				bottom: 0;
+				width: inherit;
+				height: 40px;
+				background-color: gray;
+				text-align: center;
+				line-height: 40px;
+				color: white;
+				font-family: "微软雅黑";
+			}
+		</style>
+	</head>
+	<body>
+		<div class="shopping-car">
+			<ul class="list">
+				<li class="clear" data-id = "0">
+					<div class="right">
+						<span class="minues"><a  href="#">-</a></span>
+						<span class="count">0</span>
+						<span class="plus"><a  href="#">+</a></span>
+					</div>
+				</li>
+				
+				<li class="clear" data-id = "1">
+					<div class="right">
+						<span class="minues"><a href="#">-</a></span>
+						<span class="count">0</span>
+						<span class="plus"><a href="#">+</a></span>
+					</div>
+				</li>
+				<li class="clear" data-id = "2">
+					<div class="right">
+						<span class="minues"><a href="#">-</a></span>
+						<span class="count">0</span>
+						<span class="plus"><a href="#">+</a></span>
+					</div>
+				</li>
+				<li class="clear" data-id = "3">
+					<div class="right">
+						<span class="minues"><a href="#">-</a></span>
+						<span class="count">0</span>
+						<span class="plus"><a href="#">+</a></span>
+					</div>
+				</li>
+				<li class="clear" data-id = "4">
+					<div class="right">
+						<span class="minues"><a href="#">-</a></span>
+						<span class="count">0</span>
+						<span class="plus"><a href="#">+</a></span>
+					</div>
+				</li>
+				<li class="clear" data-id = "5">
+					<div class="right">
+						<span class="minues"><a href="#">-</a></span>
+						<span class="count">0</span>
+						<span class="plus"><a href="#">+</a></span>
+					</div>
+				</li>
+				<li class="clear" data-id = "6">
+					<div class="right">
+						<span class="minues"><a href="#">-</a></span>
+						<span class="count">0</span>
+						<span class="plus"><a href="#">+</a></span>
+					</div>
+				</li>
+				<li class="clear" data-id = "7">
+					<div class="right">
+						<span class="minues"><a href="#">-</a></span>
+						<span class="count">0</span>
+						<span class="plus"><a href="#">+</a></span>
+					</div>
+				</li>
+			</ul>
+			<div class="text">
+				一共添加<span id="count">0</span>件商品
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			
+			var list = document.getElementsByClassName("list")[0].children;
+			var total = document.getElementById("count");
+			
+			//加载已存在的数据
+			
+			window.onload = function(){
+				var t = 0; //总数据
+				for(var i = 0; i<list.length;i++){
+					var index = list[i].getAttribute("data-id")-0;
+				
+					var n = localStorage.getItem("id-"+index);
+					if(n==null)
+						n=0;
+					list[i].getElementsByClassName("count")[0].innerText = n;//获取list里面的count元素？
+					t = t+(n-0); //？？？
+				}
+				total.innerText = t;
+			}
+			
+			for(var i = 0 ;i<list.length;i++){
+				//减
+				list[i].getElementsByClassName("minues")[0].onclick= function(){
+					var index = this.parentElement.parentElement.getAttribute("data-id");
+					
+					var n = this.nextElementSibling.innerText;
+					
+					if(n<=0){
+						return;
+					}
+					
+					this.nextElementSibling.innerText = n-1	;
+					
+					var currentCount = localStorage.getItem("id-"+index);
+					if(currentCount>0){
+						localStorage.setItem("id-"+index,currentCount-1);
+					}
+					total.innerText = total.innerText -1;
+				};
+				
+				//加
+				list[i].getElementsByClassName("plus")[0].onclick= function(){
+					var index = this.parentElement.parentElement.getAttribute("data-id");
+					
+					var n = this.previousElementSibling.innerText;
+					
+					this.previousElementSibling.innerText = n-0+1;
+					
+					var currentCount = localStorage.getItem("id-"+index);
+					if(currentCount!=null){
+						localStorage.setItem("id-"+index,currentCount-0+1);
+					}else{
+						localStorage.setItem("id-"+index,0);
+					}
+					total.innerText = total.innerText-0+1;
+				}	
+				
+			}
+		</script>
+		
+	</body>
+</html>

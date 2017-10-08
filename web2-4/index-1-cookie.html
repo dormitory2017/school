@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//写入cookie
+			
+			function addCookie(name,value,time,path){
+				var name = escape(name);
+				var value = escape(value);
+				var exprie = new Date(); //获取时间
+				//设置过期时间
+				
+				expire.setTime(expire.getTime()+time*1000);
+				
+				//设置存储路径
+				path = path == ""? "" : ";path"+path;
+				//统一国际时间
+				var _expire = typeof(time) =="string"? "" : ";expire="+expire.toUTCString();
+				
+				//写入cookie
+				document.cookie = name +"=" +value+_expire+path;
+			}
+			
+			//获取cookie
+			
+			function getCookie(name){
+				var name = escape(name);
+				name+="=";
+				//获取所有cookie
+				var allCookie = document.cookie;
+				
+				//找到开始位置
+				
+				var pos = allCookie.indexOf(name);
+				if(pos!=-1){
+					
+					//开始位置
+					var start = pos+name.length;
+					//找到结束位置
+					
+					var end = allCookie.indexOf(";",start);
+					if(end==-1){
+						end = allCookie.length;
+					//读取指定cookie
+					var value = allCookie.substring(start,end);//substring  截取
+					
+					return value;
+					
+					}else{
+						return "";
+					}
+				}
+				
+				function deleteCookie(name){
+					addCookie(name,"",0);
+				};
+				
+				addCookie("userName","admin",1000);//添加
+				deleteCookie("userName");//删除cookie
+				
+				
+				/**
+				 *  str.indexOf(查找的字符串，起始位置);
+				 *  str.substring(开始位置,结束位置);
+				 *
+				 * */
+				
+				var str = "userName=admin;userName2=admin2";
+				var start = str.indexOf("userName2=")+"userName2".length;
+				var end = str.indexOf(";",start);
+				if(end==-1){
+					end = str.length;
+				}
+				
+			}
+		</script>
+	</body>
+</html>

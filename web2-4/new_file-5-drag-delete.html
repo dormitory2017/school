@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box{
+				height: 200px;
+				width:400px;
+				border: 1px  solid gray;
+			}			
+			.trash{
+				width: 200px;
+				height: 200px;
+				float: left;
+			}
+			.trash img{
+				width: inherit;
+				height: inherit;
+			}
+			
+			.article{
+				float: right;
+				margin-right: 40px;
+			}
+			.article ul{
+				list-style: none;
+			}
+			.article ul li{
+				line-height: 1.5em;
+			}
+			#deleted{
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="trash">
+				<img src="img/trash1.png"/>
+			</div>
+			<div class="article">
+				<ul class="list">
+					<li draggable="true">无尽之刃</li>
+					<li draggable="true">饮魔刀</li>
+					<li draggable="true">饮血剑</li>
+					<li draggable="true">攻速鞋</li>
+					<li draggable="true">三项之力</li>
+				</ul>
+			</div>
+		</div>
+		<p>已删除项目</p>
+		<ul id="deleted"></ul>
+		
+		
+		<script type="text/javascript">
+			var trash = document.getElementsByClassName("trash")[0];
+			var list = document.getElementsByClassName("list")[0].children;//选中的是li
+			var item = null;
+			//var delete = document.getElementById("deleted");   ?????
+			for(var i = 0;i<list.length;i++){
+				list[i].ondragstart = function(){
+					item = this;
+				}
+			}
+			
+			trash.ondragover = function(e){
+				e.preventDefault();
+			}
+			
+			trash.ondrop = function(){
+				this.children[0].setAttribute("src","img/trash2.jpg");
+				document.getElementById("deleted").appendChild(item);
+			}
+			
+		</script>
+	</body>
+</html>
